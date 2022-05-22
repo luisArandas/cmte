@@ -1,2 +1,2 @@
-# cmte
-ecosystem of algorithms and methods used in computer music
+## ecosystem of algorithms and methods used in computer music
+
