@@ -1,15 +1,32 @@
 
 
 # luis arandas 22-05-2022
-# load an arbitrary audio file from the sys
+# play sequence of audio files from folder
 
-from pyo import *
+import pyo as pyo
+import os
 
-s = Server().boot()
+server = pyo.Server()
+server.boot()
 
-path = "/Users/luisarandas/github/cmte/media/concrete.wav"
+print("server -> ", server)
 
-# stereo playback with a slight shift between the two channels.
-sf = SfPlayer(path, speed=[1, 0.995], loop=True, mul=0.4).out()
+folder = "/Users/luisarandas/github/cmte/media/"
+files = os.listdir(folder)
 
-s.gui(locals())
+table = pyo.SndTable()
+print("table -> ", table)
+
+for i in files:
+    _file = folder+os.sep+i
+    print("file info -> ", i, pyo.sndinfo(_file))
+    table.append(_file)
+
+
+print("table duration ", table.getDur()) # duration in seconds
+print("table size ", table.getSize()) # size in samples
+
+audio = pyo.Osc(table=table, freq=table.getRate(), mul=.4).out()
+
+server.gui(locals())
+# server.start()

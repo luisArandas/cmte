@@ -1,8 +1,13 @@
-## ecosystem of algorithms and methods used in computer music
+## ecosystem of algorithms and methods for computer music
 
-[repo]
-audio_files.py -> load an audio file from the system
-function_pattern.py -> make generator patterns and stick functions to the callback
+[about] <br>
+this repository mainly uses pyo, some functions need pyo built with portaudio support
 
-[todo]
-controllable granulator with automatic harmonic progression
+[repo] <br>
+audio_files.py -> load file folder into a table and loop
+function_pattern.py -> make generator patterns and stick functions to the 
+
+[todo] <br>
+define position & crossfade of sounds to be added to SndTable
+controllable granulator with automatic harmonic endeavors
+
