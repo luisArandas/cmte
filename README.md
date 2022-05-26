@@ -9,6 +9,7 @@ list_devices.py -> list the current audio and midi devices <br>
 function_pattern.py -> sticking functions to triggers <br>
 
 [todo] <br>
+integrate dearpygui
 define position & crossfade of sounds to be added to SndTable <br>
 controllable granulator with automatic harmonic endeavors
 
