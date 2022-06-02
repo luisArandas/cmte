@@ -1,14 +1,7 @@
 
 
 # luis arandas 26-05-2022
-# gui controller for pyo
-
-# [todo]
-# granulator
-# sample-accurate file mesher
-# cv controllable with dc-coupled audio cards
-# osc matrix
-# filters on buttons
+# gui controller for audio volume change (w mixer)
 
 import dearpygui.dearpygui as dpg
 import pyo as pyo
