@@ -40,10 +40,12 @@ def select_file(sender, app_data):
     cwd = dpg.get_value("file_text")
     selected_file = cwd + "/" + selected_file
 
-    dpg.set_value("file_info_n", "file :" + selected_file)
-    dpg.set_value("file_info_1", "last accessed :" + time.ctime(path.getatime(selected_file)))
-    dpg.set_value("file_info_2", "last modified :" + time.ctime(path.getmtime(selected_file)))
-    dpg.set_value("file_info_3", "last changed  :" + time.ctime(path.getctime(selected_file)))
+    print("selected file ", selected_file)
+
+    # dpg.set_value("file_info_n", "file :" + selected_file)
+    # dpg.set_value("file_info_1", "last accessed :" + time.ctime(path.getatime(selected_file)))
+    # dpg.set_value("file_info_2", "last modified :" + time.ctime(path.getmtime(selected_file)))
+    # dpg.set_value("file_info_3", "last changed  :" + time.ctime(path.getctime(selected_file)))
     # dpg.set_value("file_info_4", "file size     :" + path.getsize(selected_file))
 
 def add_audio_file(sender, app_data):
