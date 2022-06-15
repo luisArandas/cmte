@@ -1,14 +1,8 @@
 
 
 # luis arandas 26-05-2022
-# gui controller for pyo
+# table controller
 
-# [todo]
-# granulator
-# sample-accurate file mesher
-# cv controllable with dc-coupled audio cards
-# osc matrix
-# filters on buttons
 
 import pyo as pyo
 import dearpygui.dearpygui as dpg
@@ -21,7 +15,9 @@ audio_table = pyo.SndTable()
 
 current_selected_file = ""
 audio_file_extensions = [".mp3", ".flac", ".aiff", ".wav", ".ogg", ".alac", ".dsd"]
+file_path_arr = []
 current_audio_table_text = ""
+current_audio_table = None
 
 dpg.create_context()
 # dpg.set_global_font_scale(1.6)
@@ -42,7 +38,7 @@ def process_directory(sender, app_data):
 
 def select_file(sender, app_data):
     selected_file = app_data
-    cwd = dpg.get_value("file_text")
+    cwd = dpg.get_value("file_text") 
     selected_file = cwd + "/" + selected_file
 
     global current_selected_file
@@ -50,13 +46,26 @@ def select_file(sender, app_data):
 
 
 def load_audio_to_table(file_name):
-    print("loading -> ", file_name)
-    global current_audio_table_text
-    x = str(pyo.sndinfo(file_name))
-    current_audio_table_text += (x + " \n")
-    dpg.set_value("current_audios_in_the_table", current_audio_table_text)
+    # load the actual audio and paths
+    file_path_arr.append(file_name)
+    audio_table.append(file_name)
 
- 
+
+    x = str(pyo.sndinfo(file_name))
+    _x = x.split()
+    del _x[1] # remove long float
+    s = ''.join(str(x) for x in _x)
+
+    global current_audio_table_text
+    text = ((s) + " \n")
+    if text in current_audio_table_text:
+        pass
+    else:
+        current_audio_table_text += text
+        print("current audio table text -> ", current_audio_table_text)
+        dpg.set_value("current_audios_in_the_table", current_audio_table_text)
+
+
 def check_audio_extension(file_name):
     x = file_name[-4:]
     if '.' in x:
@@ -107,6 +116,12 @@ with dpg.window(tag="mainwindow"):
         # dpg.add_listbox(tag="table_listbox", label='table_listbox', callback=audio_table_callback, num_items=len(current_audio_table), width=400)
         dpg.add_text(current_audio_table_text, tag="current_audios_in_the_table", wrap=400)
 
+    with dpg.window(tag="plotting_viewer", width=400, height=250, menubar=False, no_title_bar=True, no_move=True, no_resize=True):
+        dpg.set_item_pos("plotting_viewer", [425., 5.])
+        dpg.add_text("plotting table")
+        dpg.add_separator()
+        dpg.add_spacer()
+        
 
 
 dpg.setup_dearpygui()
