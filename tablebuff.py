@@ -179,12 +179,14 @@ with dpg.window(tag="mainwindow"):
         #             with dpg.plot_axis(dpg.mvYAxis, label="", no_tick_labels=True):
         #                 dpg.add_line_series(sindatax, sindatay, label="0.5 + 0.5 * sin(x)")
 
-        with dpg.plot(label="", height=250, width=-1, anti_aliased=True):
+        with dpg.plot(label="", height=190, width=-1, anti_aliased=True):
             dpg.add_plot_legend()
 
-            dpg.add_plot_axis(dpg.mvXAxis, label="")
+            dpg.add_plot_axis(dpg.mvXAxis, label="", no_tick_labels=True, no_gridlines=True, no_tick_marks=True) #, lock_min=True)
+            # dpg.set_axis_limits_auto(dpg.mvXAxis)
+            # dpg.fit_axis_data(dpg.mvXAxis)
 
-            with dpg.plot_axis(dpg.mvYAxis, label="", no_tick_labels=True):
+            with dpg.plot_axis(dpg.mvYAxis, label="", no_tick_labels=True, no_tick_marks=True, lock_min=True, lock_max=True, no_gridlines=True,):
                 dpg.set_axis_limits(dpg.last_item(), -1.2, 1.2)
 
                 # series 1 # main table buffer
@@ -205,14 +207,13 @@ with dpg.window(tag="mainwindow"):
                 dpg.pop_container_stack()
 
             # when unstaging a stage, it 'unpacks' itself
-            with dpg.stage(tag="__demo_stage1"):
+            with dpg.stage(tag="stage1"):
                 dpg.add_button(label="Staged Button 1")
-                dpg.add_button(label="Staged Button 2")
-                dpg.add_button(label="Staged Button 3")
 
-            ub1 = dpg.add_button(label="Unstage buttons", callback=_unstage_items)
-            child_id = dpg.add_child_window(height=200, width=200)
-            dpg.set_item_user_data(ub1, ["__demo_stage1", child_id])         
+            
+            ub1 = dpg.add_button(label="unstage buttons", callback=_unstage_items)
+            child_id = dpg.add_child_window(width=-1)
+            dpg.set_item_user_data(ub1, ["stage1", child_id])         
 
 
 dpg.setup_dearpygui()
