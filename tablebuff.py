@@ -4,6 +4,7 @@
 # table controller
 
 
+from turtle import position
 import pyo as pyo
 import dearpygui.dearpygui as dpg
 from os import listdir, path
@@ -26,7 +27,8 @@ table_y_data = [0,0]
 
 dpg.create_context()
 # dpg.set_global_font_scale(1.6)
-dpg.create_viewport(title=' ', width=1280, height=720)
+# dpg.set_viewport_pos([0.0, 0.0, 0.0]) # doesnt work
+dpg.create_viewport(title=' ', width=1350, height=720)
 
 
 def select_directory(sender, app_data):
@@ -65,6 +67,8 @@ def add_to_visualiser():
     table_x_data = x_data
     table_y_data = y_data
     dpg.set_value('series_1', [x_data, y_data])
+    dpg.fit_axis_data("x_axis")
+    dpg.set_axis_limits_auto("x_axis")
 
 
 
@@ -73,6 +77,7 @@ def load_audio_to_table(file_name):
     file_path_arr.append(file_name)
     audio_table.append(file_name)
     add_to_visualiser()
+
 
     x = str(pyo.sndinfo(file_name))
     _x = x.split()
@@ -102,7 +107,8 @@ def check_audio_extension(file_name):
 
 def add_audio_file(sender, app_data):
     path = check_audio_extension(current_selected_file)
-    load_audio_to_table(path)
+    if path != None: # stop non audio files from loading
+        load_audio_to_table(path)
 
 
 def add_audio_folder(sender, app_data):
@@ -141,7 +147,6 @@ def add_audio_folder(sender, app_data):
 
 
 with dpg.window(tag="mainwindow"):
-
     with dpg.window(tag="generative_start", width=335, height=305, menubar=False, no_title_bar=True, no_move=True, no_resize=True):
         
         dpg.set_item_pos("generative_start", [5., 5.])
@@ -182,9 +187,11 @@ with dpg.window(tag="mainwindow"):
         with dpg.plot(label="", height=190, width=-1, anti_aliased=True):
             dpg.add_plot_legend()
 
-            dpg.add_plot_axis(dpg.mvXAxis, label="", no_tick_labels=True, no_gridlines=True, no_tick_marks=True) #, lock_min=True)
+            dpg.add_plot_axis(dpg.mvXAxis, label="", tag="x_axis",no_tick_labels=True, no_gridlines=True, no_tick_marks=True, lock_min=True) #, lock_min=True)
+            #dpg.set_axis_limits(dpg.last_item(), -1.2, 1.2)
             # dpg.set_axis_limits_auto(dpg.mvXAxis)
-            # dpg.fit_axis_data(dpg.mvXAxis)
+            dpg.fit_axis_data(dpg.last_item())
+            dpg.set_axis_limits_auto("x_axis")
 
             with dpg.plot_axis(dpg.mvYAxis, label="", no_tick_labels=True, no_tick_marks=True, lock_min=True, lock_max=True, no_gridlines=True,):
                 dpg.set_axis_limits(dpg.last_item(), -1.2, 1.2)
@@ -218,7 +225,6 @@ with dpg.window(tag="mainwindow"):
 
 dpg.setup_dearpygui()
 dpg.show_viewport()
-
 dpg.set_primary_window("mainwindow", True)
 dpg.start_dearpygui()
 dpg.destroy_context()
