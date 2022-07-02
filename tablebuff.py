@@ -4,7 +4,6 @@
 # table controller
 
 
-from turtle import position
 import pyo as pyo
 import dearpygui.dearpygui as dpg
 from os import listdir, path
