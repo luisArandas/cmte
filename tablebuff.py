@@ -13,6 +13,9 @@ import math
 audio_server = pyo.Server()
 audio_server.boot()
 audio_table = pyo.SndTable()
+
+print("make OS checker or doesnt work")
+
 audio_table.append("/Users/luisarandas/github/cmte/media/concrete.wav")
 
 current_selected_file = ""
